@@ -27,28 +27,28 @@
       </div>
       <nav>
         <ul class="nav-links">
-          <li><a href="{%url 'home'%}" class="btn btn-outline-dark btn-sm">Inicio</a></li>
-          <li><a href="{%url 'services'%}"class="btn btn-outline-dark btn-sm">Servicios</a></li>
-          <li><a href="{%url 'contact'%}"class="btn btn-outline-dark btn-sm">Contáctanos</a></li>
-          <li><a href="{%url 'reserve'%}"class="btn btn-outline-dark btn-sm">Agendar</a></li>
+          <li><a href="{%url 'home'%}" class="btn btn-outline-dark btn-sm">Main Menu</a></li>
+          <li><a href="{%url 'services'%}"class="btn btn-outline-dark btn-sm">Services</a></li>
+          <li><a href="{%url 'contact'%}"class="btn btn-outline-dark btn-sm">Contact Us</a></li>
+          <li><a href="{%url 'reserve'%}"class="btn btn-outline-dark btn-sm">Schedule</a></li>
 
           {%if perms.app.add_servicio%}
-            <li><a href="{%url 'add'%}"class="btn btn-outline-dark btn-sm">Agregar</a></li>
+            <li><a href="{%url 'add'%}"class="btn btn-outline-dark btn-sm">Add</a></li>
           {%endif%}
 
           {%if perms.app.view_servicio%}
-            <li><a href="{%url 'list'%}"class="btn btn-outline-dark btn-sm">Listar</a></li>
+            <li><a href="{%url 'list'%}"class="btn btn-outline-dark btn-sm">List</a></li>
           {%endif%}
 
           {%if user.is_authenticated%}
-          <li><a href="{%url 'logout'%}" class="btn btn-outline-dark btn-sm">Cerrar sesión</a></li> |
+          <li><a href="{%url 'logout'%}" class="btn btn-outline-dark btn-sm">LogOut</a></li> |
             {%if user.is_superuser%}
             <li ><a href="http://127.0.0.1:8000/admin/" >@{{user.username}}</a></li>
             {%else%}
             <li ><a href="#" >@{{user.username}}</a></li>
             {%endif%}
           {%else%}
-          <li><a href="{%url 'login'%}">Iniciar sesión</a></li>
+          <li><a href="{%url 'login'%}">LogIn</a></li>
           {%endif%}
         </ul>            
       </nav>
@@ -57,23 +57,23 @@
       <div class="overlay" id="mobile-menu" >
         <a onclick="closeNav()" href="" class="close">&times;</a>
         <div class="overlay-content">
-          <a href="{%url 'home'%}">Inicio</a>
-          <a href="{%url 'services'%}">Servicios</a>
-          <a href="{%url 'contact'%}">Contáctanos</a>
-          <a href="{%url 'reserve'%}">Agendar</a>
+          <a href="{%url 'home'%}">Main Menu</a>
+          <a href="{%url 'services'%}">Services</a>
+          <a href="{%url 'contact'%}">Contact Us</a>
+          <a href="{%url 'reserve'%}">Schedule</a>
           
           {%if perms.app.add_servicio%}
-            <a href="{%url 'add'%}">Agregar</a>
+            <a href="{%url 'add'%}">Add</a>
           {%endif%}
 
           {%if perms.app.view_servicio%}
-            <a href="{%url 'list'%}">Listar</a>
+            <a href="{%url 'list'%}">List</a>
           {%endif%}
 
           {%if user.is_authenticated%}
-          <a href="{%url 'logout'%}">Cerrar sesión</a>
+          <a href="{%url 'logout'%}">LogOut</a>
           {%else%}
-          <a href="{%url 'login'%}">Iniciar sesión</a>
+          <a href="{%url 'login'%}">LogIn</a>
           {%endif%}
         </div>
       </div>
@@ -96,14 +96,14 @@
         </div>
         <div class="box">
           <br>
-            <h2>MÁS INFORMACIÓN</h2>
-            <p>HORARIO DE ATENCIÓN: Lunes a Viernes de 11:00 AM a 17:00 PM.</p>
-            <p>DIRECCIÓN: V Región, Viña del Mar, Juan Hamilton 32.</p>
+            <h2>MORE INFORMATION</h2>
+            <p>BUSINESS HOURS: Monday to Friday from 11:00 AM to 18:00 PM.</p>
+            <p>ADDRESS: V Region, Viña del Mar, Juan Hamilton 32.</p>
             <a href="https://www.gmail.com"><img src="{%static 'img/icons/iconGm.png'%}" alt="Correo">  infinitybarber@gmail.com</a>
         </div>
         <div class="box">
           <br>
-            <h2>SÍGUENOS</h2>
+            <h2>FOLLOW US</h2>
             <div class="red-social">
                 <li><a href="https://www.facebook.com"><img src="{%static 'img/icons/iconFb.png'%}" alt="Icono FB"></a></li>
                 <li><a href="https://www.instagram.com"><img src="{%static 'img/icons/iconIG.png'%}" alt="Icono IG"></a></li>
