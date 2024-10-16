@@ -3,21 +3,21 @@ from django.db import models
 # Create your models here.
 
 #Clase tipo consulta
-class TipoConsulta(models.Model):
-    nombre = models.CharField(max_length=50, verbose_name="Nombre")
+class QueryType(models.Model):
+    name = models.CharField(max_length=50, verbose_name="Name")
     
     def __str__(self):
-        return self.nombre
+        return self.name
 
 #Clase Servicio
-class Servicio(models.Model):
-    nombre = models.CharField(max_length=50, verbose_name="Nombre")
-    descripcion = models.CharField(max_length=150, verbose_name="Descripción")
-    imagen = models.ImageField(upload_to='img/servicios', verbose_name="Imagen del servicio", null=True)
-    precio =  models.IntegerField(verbose_name="Precio")
+class Service(models.Model):
+    name = models.CharField(max_length=50, verbose_name="Name")
+    description = models.CharField(max_length=150, verbose_name="Description")
+    image = models.ImageField(upload_to='img/service', verbose_name="Service image", null=True)
+    price =  models.IntegerField(verbose_name="Price")
     
     def __str__(self):
-        return self.nombre
+        return self.name
     
     #Borrar imagenes desde el admin
     def delete(self, using=None, keep_parent=False):
@@ -25,12 +25,12 @@ class Servicio(models.Model):
         super().delete()
          
 #Clase Contacto
-class Contacto (models.Model):
-    nombre = models.CharField(max_length=50, verbose_name="Nombre")
-    correo = models.EmailField(verbose_name="Correo")
-    tipo_consulta = models.ForeignKey(TipoConsulta, on_delete=models.PROTECT, verbose_name="Tipo Consulta")
-    mensaje = models.TextField(max_length=1000, verbose_name="Mensaje")
-    avisos = models.BooleanField(verbose_name="Avisos")
+class Contact (models.Model):
+    name = models.CharField(max_length=50, verbose_name="Name")
+    email = models.EmailField(verbose_name="Email")
+    query_type = models.ForeignKey(QueryType, on_delete=models.PROTECT, verbose_name="Query Type")
+    message = models.TextField(max_length=1000, verbose_name="Message")
+    advice = models.BooleanField(verbose_name="Advice")
     
     def __str__(self) :
-        return self.nombre
+        return self.name

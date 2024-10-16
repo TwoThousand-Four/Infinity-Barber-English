@@ -10,7 +10,7 @@ paypal.Buttons({
     },
     onApprove: function(data, actions){
         return actions.order.capture().then(function(details) {
-            alert('Transacción realizada con éxito por' + details.payer.name.given_name);
+            alert('Transaction completed succesfully by' + details.payer.name.given_name);
         });
     }
 }).render('#paypal-button-container')

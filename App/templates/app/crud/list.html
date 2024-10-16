@@ -13,28 +13,28 @@
     <!--Tabla de listado de servicios-->
     <div class="card">
         <div class="card-body">
-            <h2>Listado de Servicios disponibles</h2>
+            <h2>Available Services</h2>
             <hr>
             <table class="table table-striped table-hover table-responsive-sm">
                 <tr>
                     <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Precio</th>
-                    <th>Opciones</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Options</th>
                 </tr>
                 {%for s in entity%}
                     <tr> 
                         <td>{{ s.id}}</td>
-                        <td>{{ s.nombre | title }}</td>
-                        <td>{{ s.descripcion }}</td>
-                        <td>${{ s.precio }}</td>
+                        <td>{{ s.name | title }}</td>
+                        <td>{{ s.description }}</td>
+                        <td>${{ s.price }}</td>
                         <td>
-                            {%if perms.app.change_servicio%}
-                                <a href="{%url 'modify' s.id%}" class="btn btn-info btn-sm">Modificar</a>
+                            {%if perms.app.change_service%}
+                                <a href="{%url 'modify' s.id%}" class="btn btn-info btn-sm">Modify</a>
                             {%endif%}
-                            {%if perms.app.delete_servicio%}
-                                <a href="#" onclick="delete_service({{s.id}})" class="btn btn-danger btn-sm">Eliminar</a>
+                            {%if perms.app.delete_service%}
+                                <a href="#" onclick="delete_service({{s.id}})" class="btn btn-danger btn-sm">Delete</a>
                             {%endif%}
                         </td>
                     </tr>
@@ -49,21 +49,21 @@
     <br>
     <div class="card">
         <div class="card-body">
-            <h2>Listado de Formularios de contacto</h2>
+            <h2>Contact forms received</h2>
             <hr>
             <table class="table table-striped table-hover table-responsive-sm">
                 <tr>
                     <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Tipo de consulta</th>
-                    <th>Mensaje</th>
+                    <th>Name</th>
+                    <th>Query type</th>
+                    <th>Message</th>
                 </tr>
                 {%for c in entity2%}
                     <tr> 
                         <td>{{ c.id}}</td>
-                        <td>{{ c.nombre | title }}</td>
-                        <td>{{ c.tipo_consulta }}</td>
-                        <td>{{ c.mensaje }}</td>
+                        <td>{{ c.name | title }}</td>
+                        <td>{{ c.query_type }}</td>
+                        <td>{{ c.message }}</td>
                     </tr>
                 {%endfor%}
             </table>

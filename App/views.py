@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import permission_required
 from .forms import ContactForm, RegisterForm, ServiceForm
 from django.contrib import messages
-from .models import Servicio, Contacto
+from .models import Service, Contact
 from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator
 from django.http import Http404
@@ -30,22 +30,22 @@ def contact (request):
 
 #Servicios
 def services (request):
-    servicios = Servicio.objects.all()
-    return render(request, 'app/services.html', {'servicios':servicios})
+    service = Service.objects.all()
+    return render(request, 'app/services.html', {'services':service})
 
 #Reserva
 def reserve (request):
-    servicios = Servicio.objects.all()
+    services = Service.objects.all()
     page = request.GET.get('page', 1)
     
     try:
-        paginator = Paginator(servicios, 5)
-        servicios = paginator.page(page)
+        paginator = Paginator(services, 5)
+        services = paginator.page(page)
     except:
         raise Http404
     
     data={
-        'entity':servicios,
+        'entity':services,
         'paginator':paginator
     }
     return render(request, 'app/reserve.html', data)
@@ -60,15 +60,15 @@ def register(request):
         'form':RegisterForm
     }
     if request.method == 'POST':
-        formulario = RegisterForm(data=request.POST)
-        if formulario.is_valid():
-            formulario.save()
-            user = authenticate(username=formulario.cleaned_data["username"], password=formulario.cleaned_data["password1"])
+        form = RegisterForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            user = authenticate(username=form.cleaned_data["username"], password=form.cleaned_data["password1"])
             login(request, user)
-            messages.success(request, "Registro exitoso!")
+            messages.success(request, "Succesful registration!")
             return redirect(to='home')
         else:
-            data['form'] = formulario
+            data['form'] = form
     return render(request, 'registration/register.html', data)
 
 #Login
@@ -81,93 +81,93 @@ def contact(request):
         'form': ContactForm()
     }
     if request.method == 'POST':
-        formulario = ContactForm(data=request.POST)
-        if formulario.is_valid():
-            formulario.save()
-            messages.success(request, "Formulario enviado")
+        form = ContactForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Submitted form")
         else:
-            data['form'] = formulario
+            data['form'] = form
     return render(request, 'app/contact.html', data)
 
 #Agregar Servicio
-@permission_required('app.add_servicio')
+@permission_required('app.add_service')
 def add (request):
     data = {
         'form': ServiceForm()
     }
     if request.method == 'POST':
-        formulario = ServiceForm(data=request.POST, files=request.FILES)
-        if formulario.is_valid():
-            formulario.save()
-            messages.success(request, "Servicio agregado correctamente")
+        form = ServiceForm(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Service added succesfully")
         else:
-            data['form'] = formulario
+            data['form'] = form
     return render(request, 'app/crud/add.html', data)
 
 #Listar
-@permission_required('app.view_servicio')
-@permission_required( 'app.view_contacto')
+@permission_required('app.view_service')
+@permission_required( 'app.view_contact')
 def list(request):
-    contactos = Contacto.objects.all()
-    servicios = Servicio.objects.all()
+    contacts = Contact.objects.all()
+    services = Service.objects.all()
     page = request.GET.get('page', 1)
     
     try:
-        paginator = Paginator(servicios, 5)
-        servicios = paginator.page(page)
+        paginator = Paginator(services, 5)
+        services = paginator.page(page)
     except:
         raise Http404
     
     data={
-        'entity':servicios,
-        'entity2':contactos,
+        'entity':services,
+        'entity2':contacts,
         'paginator':paginator
     }
     return render(request, 'app/crud/list.html', data)
 
 #Modificar
-@permission_required('app.change_servicio')
+@permission_required('app.change_service')
 def modify(request, id):
-    servicio = get_object_or_404(Servicio, id=id)
+    service = get_object_or_404(Service, id=id)
     data = {
-        'form': ServiceForm(instance=servicio)
+        'form': ServiceForm(instance=service)
     }    
     if request.method == 'POST':
-        formulario = ServiceForm(data=request.POST,instance=servicio ,files=request.FILES)
-        if formulario.is_valid():
-            formulario.save()
-            messages.success(request, "Servicio modficado correctamente")
+        form = ServiceForm(data=request.POST,instance=service ,files=request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Service modified succesfully")
             return redirect(to="list")
         else:
-            data['form'] = formulario
+            data['form'] = form
     return render(request, 'app/crud/modify.html', data)
 
 #Eliminar
-@permission_required('app.delete_servicio')
+@permission_required('app.delete_service')
 def delete(request, id):
-    servicio = get_object_or_404(Servicio, id=id)
-    servicio.delete()
-    messages.success(request, "Servicio eliminado correctamente")
+    service = get_object_or_404(Service, id=id)
+    service.delete()
+    messages.success(request, "Service deleted succesfully")
     return redirect(to="list")
 
 
 #Carrito
-def add_service(request, servicio_id):
+def add_service(request, service_id):
     cart = Cart(request)
-    servicio = Servicio.objects.get(id=servicio_id)
-    cart.add_service(servicio)
+    service = Service.objects.get(id=service_id)
+    cart.add_service(service)
     return redirect("reserve")
 
-def delete_service(request, servicio_id):
+def delete_service(request, service_id):
     cart = Cart(request)
-    servicio = Servicio.objects.get(id=servicio_id)
-    cart.delete_service(servicio)
+    service = Service.objects.get(id=service_id)
+    cart.delete_service(service)
     return redirect("reserve")
 
-def subtract_service(request, servicio_id):
+def subtract_service(request, service_id):
     cart = Cart(request)
-    servicio = Servicio.objects.get(id=servicio_id)
-    cart.subtract(servicio)
+    service = Service.objects.get(id=service_id)
+    cart.subtract(service)
     return redirect("reserve")
 
 def clean_cart(request):

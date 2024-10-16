@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contacto, Servicio
+from .models import Contact, Service
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import ValidationError
@@ -9,25 +9,25 @@ from django.forms import ValidationError
 class ContactForm(forms.ModelForm):
     
     class Meta:
-        model = Contacto
-        fields = ["nombre", "correo", "tipo_consulta", "mensaje", "avisos"]
+        model = Contact
+        fields = ["name", "email", "query_type", "message", "advice"]
 
 
 #Formulario para agregar un servicio        
 class ServiceForm(forms.ModelForm):
     
     class Meta:
-        model = Servicio
+        model = Service
         fields = '__all__'
 
 #Formulario de registro de usuario
 class RegisterForm(UserCreationForm):
     
-    def clean_nombre(self):
-        username =self.cleaned_data["nombre"]
-        existe = User.objects.filter(username=username).exists()
-        if existe:
-            raise ValidationError("Ya existe un usuario con ese nombre")
+    def clean_name(self):
+        username =self.cleaned_data["name"]
+        exist = User.objects.filter(username=username).exists()
+        if exist:
+            raise ValidationError("A user with that name already exists")
         return username
     
     class Meta:

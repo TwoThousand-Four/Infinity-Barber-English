@@ -9,15 +9,15 @@
 {%block content%}
 {%load static%}
 <div class="container">
-    {% for servicio in servicios %}
+    {% for service in services %}
     <div class="card">
         <figure>
-            <img src="{{ servicio.imagen.url }}">
+            <img src="{{ service.image.url }}">
         </figure>
         <div class="contenido-card">
-            <h1>{{ servicio.nombre}}</h1>
-            <p>{{ servicio.descripcion }}</p>
-            <strong>${{ servicio.precio}}</strong>
+            <h1>{{ services.name}}</h1>
+            <p>{{ service.description }}</p>
+            <strong>${{ service.price}}</strong>
         </div>
     </div>
     {% endfor %}
